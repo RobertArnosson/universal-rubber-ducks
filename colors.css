@@ -1,0 +1,14 @@
+:root {
+    --primary-yellow: #FFD700; /* Classic rubber ducky yellow */
+    --secondary-orange: #FF5733;
+    --accent-green: #00FF00;
+    --accent-blue: #0000FF;
+    --accent-pink: #FF69B4;
+    --accent-purple: #800080;
+    --text-white: #FFFFFF;
+    --text-black: #000000;
+    --background-1: hsl(0, 0%, 100%);
+    --background-2: hsl(0, 0%, 95%);
+    --background-3: hsl(0, 0%, 90%);
+    --background-4: hsl(0, 0%, 85%);
+}

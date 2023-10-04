@@ -1,0 +1,14 @@
+{
+    "rubberDucks": [
+        {
+            "name": "Classic Rubber Duck",
+            "color": "Yellow",
+            "points": 10
+        },
+        {
+            "name": "Disco Duck",
+            "color": "Multicolored",
+            "points": 20
+        }
+    ]
+}

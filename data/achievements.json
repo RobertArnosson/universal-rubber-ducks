@@ -1,0 +1,46 @@
+{
+    "achievements": {
+        "firstClick": {
+            "name": "First Click",
+            "description": "Click your first rubber duck!",
+            "achieved": false,
+            "target": 1
+        },
+        "rubberDuckCollector": {
+            "name": "Rubber Duck Collector",
+            "description": "Collect 10 rubber ducks!",
+            "achieved": false,
+            "target": 10
+        },
+        "DuckLover": {
+            "name": "Duck Lover",
+            "description": "Collect 50 rubber ducks!",
+            "achieved": false,
+            "target": 50
+        },
+        "DuckMania": {
+            "name": "Duck Mania",
+            "description": "Collect 100 rubber ducks!",
+            "achieved": false,
+            "target": 100
+        },
+        "DuckConnoisseur": {
+            "name": "Duck Connoisseur",
+            "description": "Collect 250 rubber ducks!",
+            "achieved": false,
+            "target": 250
+        },
+        "ClickMaster": {
+            "name": "Click Master",
+            "description": "Click 1000 times!",
+            "achieved": false,
+            "target": 1000
+        },
+        "DuckTycoon": {
+            "name": "Duck Tycoon",
+            "description": "Reach a score of 5000!",
+            "achieved": false,
+            "target": 5000
+        }
+    }
+}

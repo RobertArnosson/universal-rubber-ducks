@@ -1,0 +1,18 @@
+{
+    "upgrades": {
+        "rubberDuckMagnet": {
+            "name": "Rubber Duck Magnet",
+            "description": "Attracts rubber ducks with each click.",
+            "cost": 10,
+            "level": 0,
+            "effect": 1
+        },
+        "duckIncubator": {
+            "name": "Duck Incubator",
+            "description": "Increases passive duck generation.",
+            "cost": 20,
+            "level": 0,
+            "effect": 1
+        }
+    }
+}

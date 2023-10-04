@@ -1,1 +1,1 @@
-# universal-rubber-ducks
+# Universal Rubber Ducks

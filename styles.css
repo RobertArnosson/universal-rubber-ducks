@@ -1,0 +1,21 @@
+/* Import the color variables */
+@import 'colors.css';
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100%;
+    background: var(--background-1);
+    color: var(--text-black);
+    margin: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 1.4rem;
+    text-rendering: optimizeLegibility;
+    background-color: var(--background-1);
+    text-align: center;
+}
