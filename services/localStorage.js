@@ -58,12 +58,20 @@ const localStorageUtils = {
         }
     },
 
+    clearData: function () {
+        if (isLocalStorageSupported()) {
+            localStorage.clear();
+        } else {
+            console.error('Local storage is not supported in this browser.');
+        }
+    },
+
     // Function to initialize data in local storage if it doesn't exist
     initializeData: function () {
         const keys = [
             'player',
             'achievements',
-            'chickens',
+            'ducks',
             'upgrades',
             'game'
         ];

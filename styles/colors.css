@@ -7,8 +7,6 @@
     --accent-purple: #800080;
     --text-white: #FFFFFF;
     --text-black: #000000;
-    --background-1: hsl(0, 0%, 100%);
-    --background-2: hsl(0, 0%, 95%);
-    --background-3: hsl(0, 0%, 90%);
-    --background-4: hsl(0, 0%, 85%);
+    --background-1: #9F9AED;
+    --background-2: #8A83E9;
 }

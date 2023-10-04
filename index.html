@@ -7,6 +7,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <script src="script.js"></script>
+    <div id="duckTopDiv">
+        <span id="duckTopSpan">Ducks</span><br>
+        <span id="duckScore">0</span>
+    </div>
+    <div id="duckButtonDiv">
+        <button id="duckButton">
+            <img id="duckImage" draggable="false" (dragstart)="false;" class="unselectable" src="assets/images/ducks/rubberduck.png" alt="Image Description">
+        </button>
+    </div>
+    <div id="achievement-container">
+        <div class="achievement">
+            <h2>Achievement Unlocked!</h2>
+            <p>You've completed a task.</p>
+        </div>
+    </div>
+
+    <button id="clearLS">Clear</button>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
