@@ -8,21 +8,34 @@
 </head>
 <body>
     <div id="duckTopDiv">
-        <span id="duckTopSpan">Ducks</span><br>
-        <span id="duckScore">0</span>
-    </div>
+        <div id="inventoryDiv">
+            <span id="duckInventory">Inventory: <span id="inventoryCount">0</span></span>
+        </div>
+        <div id="moneyDiv">
+            <span id="duckMoney">Money: <span id="moneyCount">0</span></span>
+        </div>
+        <div id="priceDiv">
+            <span id="duckPrice">Price: <span id="priceCount">1</span></span>
+        </div>
+        <div id="ducksPerSecondDiv">
+            <span id="ducksProduced">Ducks/Sec: <span id="ducksPerSecond">0</span></span>
+        </div>
+    </div>      
     <div id="duckButtonDiv">
         <button id="duckButton">
-            <img id="duckImage" draggable="false" (dragstart)="false;" class="unselectable" src="assets/images/ducks/rubberduck.png" alt="Image Description">
+            <img id="duckImage" draggable="false" (dragstart)="false;" class="unselectable" src="assets/images/ducks/rubberduck2.png" alt="Image Description">
         </button>
     </div>
-    <div id="achievement-container">
-        <div class="achievement">
-            <h2>Achievement Unlocked!</h2>
-            <p>You've completed a task.</p>
+    <div id="shopOverlay">
+        <div id="shopContent">
+            <h2>Shop</h2>
+            <ul id="upgradeList">
+            </ul>
+            <button id="closeShopButton">Close</button>
         </div>
     </div>
-
+    <button id="shopButton">Shop</button>
+    <div id="achievement-container"></div>
     <button id="clearLS">Clear</button>
     <script type="module" src="script.js"></script>
 </body>

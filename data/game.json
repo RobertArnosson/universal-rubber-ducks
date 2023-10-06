@@ -1,3 +1,9 @@
 {
-    "global_multi": 1
+    "price": 1,
+    "inventory": 0,
+    "money": 0,
+    "ducksProduced": 0,
+    "universeTaken": 0,
+    "sellInterval": 1000,
+    "globalMulti": 1
 }

@@ -30,18 +30,37 @@ html, body {
     padding: 10px; /* Add padding to the top bar */
     background: var(--background-2); /* Background color */
     display: flex;
-    flex-direction: column;
+    justify-content: space-around; /* Space elements evenly */
     align-items: center;
-    justify-content: center;
 }
 
-#duckTopSpan {
-    font-size: 14px; /* Set a smaller font size for the "Ducks" span */
-    margin-bottom: 5px; /* Add margin to separate the two spans */
+#inventoryDiv,
+#moneyDiv,
+#priceDiv,
+#ducksPerSecondDiv {
+    display: flex;
+    align-items: center;
 }
 
-#duckScore {
-    font-size: 24px; /* Set font size for the score span */
+#inventoryDiv,
+#moneyDiv,
+#priceDiv {
+    margin-right: 20px; /* Add spacing between elements */
+}
+
+#duckInventory,
+#duckMoney,
+#duckPrice,
+#ducksProduced {
+    font-size: 14px; /* Set a smaller font size */
+}
+
+#inventoryCount,
+#moneyCount,
+#priceCount,
+#ducksPerSecond {
+    font-weight: bold;
+    margin-left: 5px; /* Add spacing between labels and values */
 }
 
 #duckButtonDiv {
@@ -50,6 +69,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100vh; /* Make it at least the height of the viewport */
 }
 
 #duckButton {
@@ -79,33 +99,112 @@ html, body {
     transform: scale(1.2);
 }
 
-#achievement-container {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
+/* Shop overlay styles */
+#shopOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
     align-items: center;
 }
 
-.achievement {
+#shopContent {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 80%;
+    overflow-y: auto;
+}
+
+#closeShopButton {
+    display: block;
+    margin-top: 10px;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#closeShopButton:hover {
+    background: #2980b9;
+}
+
+#shopButton {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
     background-color: #3498db;
     color: #fff;
-    border-radius: 5px; /* Smaller border-radius */
-    padding: 10px; /* Reduced padding */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller shadow */
-    font-size: 14px; /* Smaller font size */
-    transform: translateY(100%);
-    opacity: 0;
-    transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#shopButton:hover {
+    background-color: #2980b9;
+}
+
+/* Style for the achievement container */
+#achievement-container {
+    position: fixed; /* You can change this based on your layout requirements */
+    bottom: 20px;
+    right: 0px;
+    max-width: 300px; /* Adjust the maximum width as needed */
+    z-index: 9999; /* Ensure it's above other content */
+    overflow: hidden; /* Hide the overflowing achievements */
+}
+  
+/* Style for individual achievement elements */
+.achievement {
+    background-color: #333; /* Background color */
+    color: #fff; /* Text color */
+    padding-inline: 10px;
+    border-radius: 5px 0px 0px 5px;
+    transform: translateX(100%); /* Start offscreen on the right */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+  
+/* Style for the achievement content */
+.achievement-content {
+    display: flex; /* Display image and text in a row */
+    align-items: center; /* Vertically center content */
+}
+  
+/* Style for the achievement image */
+.achievement-image {
+    width: 30px; /* Adjust the width as needed */
+    height: 30px; /* Adjust the height as needed */
+    margin-right: 10px; /* Spacing between image and text */
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+  
+/* Style for the title within achievement */
+.achievement #achievement-title {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+  
+/* Style for the message within achievement */
+.achievement #achievement-message {
+    font-size: 12px;
 }
 
 /* Button styles */
 #clearLS {
     position: fixed;
     bottom: 10px;
-    right: 10px;
+    left: 10px;
     padding: 10px;
     background-color: #3498db;
     color: #fff;

@@ -1,5 +1,6 @@
 {
     "name": "Guest",
-    "score": 0,
+    "total_ducks": 0,
+    "total_money": 0,
     "developer": false
 }

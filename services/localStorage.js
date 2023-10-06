@@ -12,62 +12,92 @@ function isLocalStorageSupported() {
 // Create a module for localStorage operations
 const localStorageUtils = {
     // Save data to local storage
-    saveData: function (key, data) {
-        if (isLocalStorageSupported()) {
-            localStorage.setItem(key, JSON.stringify(data));
-        } else {
-            console.error('Local storage is not supported in this browser.');
-        }
+    saveData: async function (key, data) {
+        return new Promise((resolve, reject) => {
+            if (isLocalStorageSupported()) {
+                try {
+                    localStorage.setItem(key, JSON.stringify(data));
+                    resolve();
+                } catch (error) {
+                    reject(error);
+                }
+            } else {
+                reject(new Error('Local storage is not supported in this browser.'));
+            }
+        });
     },
 
     // Load data from local storage
-    loadData: function (key) {
-        if (isLocalStorageSupported()) {
-            const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : null;
-        } else {
-            console.error('Local storage is not supported in this browser.');
-            return null;
-        }
+    loadData: async function (key) {
+        return new Promise((resolve, reject) => {
+            if (isLocalStorageSupported()) {
+                try {
+                    const data = localStorage.getItem(key);
+                    resolve(data ? JSON.parse(data) : null);
+                } catch (error) {
+                    reject(error);
+                }
+            } else {
+                reject(new Error('Local storage is not supported in this browser.'));
+            }
+        });
     },
 
     // Update data in local storage
-    updateData: function (key, newData) {
-        if (isLocalStorageSupported()) {
-            const existingData = localStorageUtils.loadData(key);
-            if (existingData) {
-                const updatedData = { ...existingData, ...newData };
-                localStorage.setItem(key, JSON.stringify(updatedData));
-                return updatedData;
+    updateData: async function (key, newData) {
+        return new Promise(async (resolve, reject) => {
+            if (isLocalStorageSupported()) {
+                try {
+                    const existingData = await localStorageUtils.loadData(key);
+                    if (existingData) {
+                        const updatedData = { ...existingData, ...newData };
+                        await localStorageUtils.saveData(key, updatedData); // Save merged data
+                        resolve(updatedData);
+                    } else {
+                        reject(new Error('Data not found in local storage.'));
+                    }
+                } catch (error) {
+                    reject(error);
+                }
             } else {
-                console.error('Data not found in local storage.');
-                return null;
+                reject(new Error('Local storage is not supported in this browser.'));
             }
-        } else {
-            console.error('Local storage is not supported in this browser.');
-            return null;
-        }
+        });
     },
 
     // Delete data from local storage
-    deleteData: function (key) {
-        if (isLocalStorageSupported()) {
-            localStorage.removeItem(key);
-        } else {
-            console.error('Local storage is not supported in this browser.');
-        }
+    deleteData: async function (key) {
+        return new Promise((resolve, reject) => {
+            if (isLocalStorageSupported()) {
+                try {
+                    localStorage.removeItem(key);
+                    resolve();
+                } catch (error) {
+                    reject(error);
+                }
+            } else {
+                reject(new Error('Local storage is not supported in this browser.'));
+            }
+        });
     },
 
-    clearData: function () {
-        if (isLocalStorageSupported()) {
-            localStorage.clear();
-        } else {
-            console.error('Local storage is not supported in this browser.');
-        }
+    clearData: async function () {
+        return new Promise((resolve, reject) => {
+            if (isLocalStorageSupported()) {
+                try {
+                    localStorage.clear();
+                    resolve();
+                } catch (error) {
+                    reject(error);
+                }
+            } else {
+                reject(new Error('Local storage is not supported in this browser.'));
+            }
+        });
     },
 
     // Function to initialize data in local storage if it doesn't exist
-    initializeData: function () {
+    initializeData: async function () {
         const keys = [
             'player',
             'achievements',
@@ -75,31 +105,32 @@ const localStorageUtils = {
             'upgrades',
             'game'
         ];
-    
-        for (const key of keys) {
+
+        const promises = keys.map(async (key) => {
             // Construct the filename for the JSON file corresponding to the key
             const filename = `./data/${key}.json`;
-    
-            // Fetch the JSON data from the file
-            fetch(filename)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch data for key: ${key}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Check if data exists in local storage, and if not, save the fetched data
-                    const existingData = localStorageUtils.loadData(key);
-                    if (!existingData) {
-                        localStorageUtils.saveData(key, data);
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-    },    
+
+            try {
+                // Fetch the JSON data from the file
+                const response = await fetch(filename);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch data for key: ${key}`);
+                }
+                const data = await response.json();
+
+                // Check if data exists in local storage, and if not, save the fetched data
+                const existingData = await localStorageUtils.loadData(key);
+                if (!existingData) {
+                    await localStorageUtils.saveData(key, data);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        });
+
+        // Wait for all promises to complete
+        await Promise.all(promises);
+    },
 };
 
 export default localStorageUtils;

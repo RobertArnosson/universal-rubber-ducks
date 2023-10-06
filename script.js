@@ -1,21 +1,36 @@
-import click from "./services/game.js";
+
+import { click, sell, update } from "./services/game.js";
+import { startDuckCalc, startSelling } from "./services/gameLoops.js";
 import localStorageUtils from "./services/localStorage.js";
+import { closeShop, openShop } from "./services/shop.js";
 
-localStorageUtils.initializeData()
+localStorageUtils.initializeData();
+localStorageUtils.loadData('game').then((gameData) => startSelling(gameData.sellInterval));
+startDuckCalc();
+update();
 
-const rubberChickenCount = document.getElementById('duckScore');
+
 const clickButton = document.getElementById('duckButton');
 const clearButton = document.getElementById('clearLS');
+const shopButton = document.getElementById('shopButton');
+const closeShopButton = document.getElementById('closeShopButton');
 
-function handleButtonClick() {
-    let count = click();
-    rubberChickenCount.textContent = count;
+async function handleButtonClick() {
+    await click();
+    await update();
 }
 
-function clearLocalStorage() {
-    localStorageUtils.clearData();
-    localStorageUtils.initializeData()
+async function handleShopOpen() {
+    await openShop();
+}
+
+async function clearLocalStorage() {
+    await localStorageUtils.clearData();
+    await localStorageUtils.initializeData();
+    await update();
 }
 
 clickButton.addEventListener('click', handleButtonClick);
 clearButton.addEventListener('click', clearLocalStorage);
+shopButton.addEventListener('click', handleShopOpen);
+closeShopButton.addEventListener('click', closeShop);

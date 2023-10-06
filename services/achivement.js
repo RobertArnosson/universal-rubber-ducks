@@ -1,9 +1,9 @@
 import localStorageUtils from "./localStorage.js";
 
 // Function to check and grant achievements
-function checkAchievements() {
-    const achievementsData = localStorageUtils.loadData('achievements');
-    const playerData = localStorageUtils.loadData('player');
+async function checkAchievements() {
+    const achievementsData = await localStorageUtils.loadData('achievements');
+    const playerData = await localStorageUtils.loadData('player');
 
     if (!achievementsData || !playerData) {
         console.error("Achievements or player data not found in local storage.");
@@ -14,54 +14,79 @@ function checkAchievements() {
 
     for (const achievementKey in achievements) {
         const achievement = achievements[achievementKey];
-        if (!achievement.achieved && playerData.score >= achievement.target) {
+        if (!achievement.achieved && playerData.total_ducks >= achievement.target) {
             achievement.achieved = true;
             console.log(`Achievement unlocked: ${achievement.name}`);
             queueAchievement(achievement.name, achievement.description)
 
             // Save the updated achievements data back to local storage
-            localStorageUtils.updateData('achievements', { achievements });
+            await localStorageUtils.updateData('achievements', { achievements });
         }
     }
 }
 
+// Separate the DOM elements and event handling logic from the functions.
 const achievementContainer = document.getElementById('achievement-container');
 const achievementsQueue = [];
 
-function showAchievement(message) {
+// Create a class for achievements to encapsulate their behavior.
+class Achievement {
+  constructor(title, message, imageUrl) {
+    this.title = title;
+    this.message = message;
+    this.imageUrl = imageUrl; // New property for the image URL
+    this.element = this.createAchievementElement();
+  }
+
+  createAchievementElement() {
     const achievement = document.createElement('div');
     achievement.className = 'achievement';
-    achievement.innerHTML = `<h2>${message[0]}</h2><p>${message[1]}</p>`;
-    achievementContainer.appendChild(achievement);
-    
-    setTimeout(() => {
-        achievement.style.transform = 'translateY(-20px)';
-        achievement.style.opacity = '1';
-        
-        setTimeout(() => {
-            achievement.style.transform = 'translateY(-100%)';
-            achievement.style.opacity = '0';
-            
-            achievementContainer.removeChild(achievement);
-            achievementsQueue.shift();
-            
-            if (achievementsQueue.length > 0) {
-                showNextAchievement();
-            }
-        }, 3000); // Display for 3 seconds
-    }, 100); // Delay before showing
-}
+    achievement.innerHTML = `
+      <div class="achievement-content">
+        <img src="${this.imageUrl}" draggable="false" (dragstart)="false;" alt="Achievement Image" class="achievement-image unselectable">
+        <div class="achievement-text">
+          <p id="achievement-title">${this.title}</p>
+          <p id="achievement-message">${this.message}</p>
+        </div>
+      </div>`;
+    return achievement;
+  }
 
-function showNextAchievement() {
-    if (achievementsQueue.length > 0) {
-        showAchievement(achievementsQueue[0]);
-    }
-}
+  show() {
+    achievementContainer.appendChild(this.element);
+    setTimeout(() => this.animateIn(), 100);
+  }
 
-export function queueAchievement(title, message) {
-    achievementsQueue.push([title, message]);
+  animateIn() {
+    this.element.style.transform = 'translateX(0)'; // Move in from the right
+    this.element.style.opacity = '1';
+    setTimeout(() => this.animateOut(), 3000);
+  }
+
+  animateOut() {
+    this.element.style.transform = 'translateX(100%)'; // Move back out to the right
+    this.element.style.opacity = '0';
+    setTimeout(() => this.remove(), 300);
+  }
+
+  remove() {
+    achievementContainer.removeChild(this.element);
+    achievementsQueue.shift();
     showNextAchievement();
-}
+  }
+  }
+
+  function showNextAchievement() {
+    if (achievementsQueue.length > 0) {
+      achievementsQueue[0].show();
+    }
+  }
+
+  export function queueAchievement(title, message) {
+    const achievement = new Achievement(title, message, './assets/images/ducks/rubberduck2.png');
+    achievementsQueue.push(achievement);
+    showNextAchievement();
+  }
 
 
 export default checkAchievements;
