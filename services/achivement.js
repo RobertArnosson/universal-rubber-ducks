@@ -14,7 +14,7 @@ async function checkAchievements() {
 
     for (const achievementKey in achievements) {
         const achievement = achievements[achievementKey];
-        if (!achievement.achieved && playerData.total_ducks >= achievement.target) {
+        if (!achievement.achieved && playerData.totalDucks >= achievement.target) {
             achievement.achieved = true;
             console.log(`Achievement unlocked: ${achievement.name}`);
             queueAchievement(achievement.name, achievement.description)

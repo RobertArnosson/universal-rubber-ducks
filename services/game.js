@@ -6,11 +6,16 @@ let currentCps = 0;
 async function click() {
     try {
         const gameData = await localStorageUtils.loadData('game')
+        const playerData = await localStorageUtils.loadData('player')
+        let totalDucks = playerData.totalDucks;
         let inventory = gameData.inventory;
         const globalMulti = gameData.globalMulti;
-        inventory += calcClick(1, globalMulti);
+        let addAmount = calcClick(1, globalMulti);
+        inventory += addAmount
         currentCps += 1;
+        totalDucks += addAmount;
         await localStorageUtils.updateData('game', { "inventory": inventory });
+        await localStorageUtils.updateData('player', { "totalDucks": totalDucks });
         await checkAchievements();
         return inventory;
     } catch (error) {
@@ -67,6 +72,8 @@ async function sell() {
             "inventory": inventory,
             "money": gameData.money
         });
+
+        await localStorageUtils.updateData('player', { "totalMoney": gameData.money });
 
         update();
     } catch (error) {
